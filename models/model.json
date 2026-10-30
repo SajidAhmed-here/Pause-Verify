@@ -1,0 +1,13 @@
+{
+  "name": "imdet pe_small (Perception Encoder S16)",
+  "source": "https://huggingface.co/Deckard618/imdet",
+  "license": "Apache-2.0",
+  "file": "models/detector.onnx",
+  "remoteUrl": "https://huggingface.co/Deckard618/imdet/resolve/main/pe_small/model.onnx",
+  "inputSize": 256,
+  "resizeShortSide": 256,
+  "mean": [0, 0, 0],
+  "std": [1, 1, 1],
+  "fakeIndex": 0,
+  "outputIsLogits": true
+}

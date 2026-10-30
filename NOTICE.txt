@@ -1,0 +1,10 @@
+Pause & Verify — third-party components
+
+1. ONNX Runtime Web (libs/ort/)
+   Copyright (c) Microsoft Corporation. Licensed under the MIT License.
+   https://github.com/microsoft/onnxruntime
+
+2. AI-image detection model "imdet pe_small" (models/detector.onnx, or downloaded on first use)
+   https://huggingface.co/Deckard618/imdet — Apache License 2.0.
+   Built on Meta's Perception Encoder (PE-Core S16), Apache License 2.0.
+   Used unmodified. The model gives a probability, not proof.

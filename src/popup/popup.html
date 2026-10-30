@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Pause &amp; Verify</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <div class="header__left">
+      <img src="../../icons/icon32.png" alt="" class="header__logo">
+      <div>
+        <div class="header__title">Pause &amp; Verify</div>
+        <div class="header__sub">v5.0 · on-device</div>
+      </div>
+    </div>
+    <div class="header__right">
+      <button class="icon-btn" id="themeToggleBtn" title="Toggle theme">
+        <span class="theme-icon">🌙</span>
+      </button>
+      <label class="toggle">
+        <input type="checkbox" id="activeToggle" checked>
+        <span class="toggle__track"></span>
+      </label>
+    </div>
+  </header>
+
+  <!-- ── Tab Bar ── -->
+  <nav class="tabs">
+    <button class="tab tab--active" data-tab="main">📊 Dashboard</button>
+    <button class="tab" data-tab="settings">⚙️ Settings</button>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       MAIN TAB
+  ══════════════════════════════════════════ -->
+  <div class="tab-content" id="tab-main">
+
+    <!-- Detector status -->
+    <div class="section api-section">
+      <div class="api-status" id="modelStatus" title="Detection runs on this computer. Nothing is uploaded.">
+        <span id="modelDot" class="dot dot--green"></span>
+        <span id="modelLabel">On-device detection · no key needed</span>
+      </div>
+    </div>
+
+    <!-- Screen Time -->
+    <div class="section screen-time" id="screenTimeSection">
+      <div class="st-header">
+        <span class="st-label">⏱ Screen Time Limit</span>
+        <span id="stCountdown" class="st-countdown"></span>
+      </div>
+      <div class="st-btns">
+        <button class="st-btn st-active" data-hours="0">Off</button>
+        <button class="st-btn" data-hours="1">1 hr</button>
+        <button class="st-btn" data-hours="2">2 hrs</button>
+        <button class="st-btn" data-hours="3">3 hrs</button>
+        <button class="st-btn" data-hours="4">4 hrs</button>
+      </div>
+      <div class="st-row2">
+        <span id="stNote" class="st-note">No limit set</span>
+        <button id="stResetBtn" class="btn-ghost" style="display:none">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- Autoplay Control -->
+    <div class="section" id="autoplaySection">
+      <div class="st-header">
+        <span class="st-label">▶️ Reel / Video Autoplay</span>
+        <label class="toggle">
+          <input type="checkbox" id="autoplayToggle" checked>
+          <span class="toggle__track"></span>
+        </label>
+      </div>
+      <div class="st-row2">
+        <span class="st-note" id="autoplayNote">Videos play automatically</span>
+      </div>
+    </div> 
+
+    <!-- Stats -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat">
+        <span id="statTotal">0</span>
+        <small>Total</small>
+      </div>
+      <div class="stat stat--red">
+        <span id="statHigh">0</span>
+        <small>Likely AI</small>
+      </div>
+      <div class="stat stat--amber">
+        <span id="statMed">0</span>
+        <small>Possibly AI</small>
+      </div>
+      <div class="stat stat--green">
+        <span id="statLow">0</span>
+        <small>Low signs</small>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="HIGH_RISK">🚨 High</button>
+      <button class="filter-btn" data-filter="MEDIUM_RISK">⚠️ Med</button>
+      <button class="filter-btn" data-filter="LOW_RISK">✅ Low</button>
+      <button class="filter-btn" data-filter="share">🔁 Share</button>
+    </div>
+
+    <!-- List -->
+    <div class="list" id="list">
+      <div class="empty" id="empty">
+        <div class="empty__icon">👍</div>
+        <div class="empty__text">Share or react to a Facebook post to see checks here.</div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <button id="clearBtn" class="btn-ghost">🗑 Clear All</button>
+      <span id="methodNote" class="footer__note"></span>
+      <button id="refreshBtn" class="btn-ghost">↻ Refresh</button>
+    </footer>
+
+  </div><!-- /tab-main -->
+
+  <!-- ══════════════════════════════════════════
+       SETTINGS TAB
+  ══════════════════════════════════════════ -->
+<div class="tab-content tab-content--hidden" id="tab-settings">
+    <div class="settings-scroll">
+
+      <!-- ── Appearance ── -->
+      <div class="sg">
+        <div class="sg-title">Appearance</div>
+
+        <div class="sr">
+          <div class="si">
+            <div class="sn">Dark Mode</div>
+            <div class="sd">Switch between dark and light theme</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="settingDarkMode" checked><span class="toggle__track"></span></label>
+        </div>
+
+        <div class="sr">
+          <div class="si">
+            <div class="sn">Compact View</div>
+            <div class="sd">Denser cards, less padding per entry</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="settingCompact"><span class="toggle__track"></span></label>
+        </div>
+
+        <div class="sr sr--select">
+          <div class="si">
+            <div class="sn">Max posts shown</div>
+            <div class="sd">Limit how many entries appear in the list</div>
+          </div>
+          <select id="settingMaxPosts" class="s-select">
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="80" selected>80</option>
+            <option value="150">150</option>
+            <option value="999">All</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ── Friction & Focus ── -->
+      <div class="sg">
+        <div class="sg-title">Friction &amp; Focus</div>
+
+        <div class="sr">
+          <div class="si">
+            <div class="sn">Grayscale Mode</div>
+            <div class="sd">Desaturate the Facebook page to reduce addictive engagement</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="settingGrayscale"><span class="toggle__track"></span></label>
+        </div>
+
+        <div class="sr">
+          <div class="si">
+            <div class="sn">Disable Story Autoplay</div>
+            <div class="sd">Stories won't auto-advance — tap left/right to navigate</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="settingStoryAutoplay"><span class="toggle__track"></span></label>
+        </div>
+      </div>
+
+      <!-- ── Dashboard Sections ── -->
+      <div class="sg">
+        <div class="sg-title">Dashboard</div>
+
+        <div class="sr">
+          <div class="si">
+            <div class="sn">Reaction Counts Bar</div>
+            <div class="sd">Show Total / High / Med / Low summary</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="settingShowStats" checked><span class="toggle__track"></span></label>
+        </div>
+
+        <div class="sr">
+          <div class="si">
+            <div class="sn">Screen Time Tracker</div>
+            <div class="sd">Show session time limit controls</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="settingShowScreenTime" checked><span class="toggle__track"></span></label>
+        </div>
+      </div>
+
+      <!-- ── Post Cards ── -->
+      <div class="sg">
+        <div class="sg-title">Post Cards</div>
+
+        <div class="sr">
+          <div class="si"><div class="sn">Risk Badges</div><div class="sd">High / Med / Low badge with score %</div></div>
+          <label class="toggle"><input type="checkbox" id="settingShowBadges" checked><span class="toggle__track"></span></label>
+        </div>
+        <div class="sr">
+          <div class="si"><div class="sn">Score Bars</div><div class="sd">AI-likeness &amp; caption-cue bars</div></div>
+          <label class="toggle"><input type="checkbox" id="settingShowBars" checked><span class="toggle__track"></span></label>
+        </div>
+        <div class="sr">
+          <div class="si"><div class="sn">Flag Tags</div><div class="sd">Warning chips (e.g. "AI-like video")</div></div>
+          <label class="toggle"><input type="checkbox" id="settingShowFlags" checked><span class="toggle__track"></span></label>
+        </div>
+        <div class="sr">
+          <div class="si"><div class="sn">Post Snippet</div><div class="sd">First 160 chars of post text</div></div>
+          <label class="toggle"><input type="checkbox" id="settingShowText" checked><span class="toggle__track"></span></label>
+        </div>
+        <div class="sr">
+          <div class="si"><div class="sn">Analysis Method</div><div class="sd">🔒 On-device vs 📝 caption-only label</div></div>
+          <label class="toggle"><input type="checkbox" id="settingShowMethod" checked><span class="toggle__track"></span></label>
+        </div>
+        <div class="sr">
+          <div class="si"><div class="sn">Media Tags</div><div class="sd">🖼 / 🎬 badges for image/video posts</div></div>
+          <label class="toggle"><input type="checkbox" id="settingShowMedia" checked><span class="toggle__track"></span></label>
+        </div>
+      </div>
+
+      <!-- ── On-Page Overlays ── -->
+      <div class="sg">
+        <div class="sg-title">On-Page Overlays</div>
+
+        <div class="sr">
+          <div class="si"><div class="sn">Risk Badges on Posts</div><div class="sd">Floating badge on Facebook posts directly</div></div>
+          <label class="toggle"><input type="checkbox" id="settingPageBadges" checked><span class="toggle__track"></span></label>
+        </div>
+        <div class="sr">
+          <div class="si"><div class="sn">Share Analysis Popup</div><div class="sd">Check posts for AI before you share</div></div>
+          <label class="toggle"><input type="checkbox" id="settingShareOverlay" checked><span class="toggle__track"></span></label>
+        </div>
+      </div>
+
+      <!-- ── Detection ── -->
+      <div class="sg">
+        <div class="sg-title">Detection Sensitivity</div>
+
+        <div class="sr sr--select">
+          <div class="si">
+            <div class="sn">High Risk threshold</div>
+            <div class="sd">"Likely AI" at or above this score</div>
+          </div>
+          <select id="settingHighThresh" class="s-select">
+            <option value="0.6">60%</option>
+            <option value="0.7" selected>70%</option>
+            <option value="0.8">80%</option>
+            <option value="0.9">90%</option>
+          </select>
+        </div>
+
+        <div class="sr sr--select">
+          <div class="si">
+            <div class="sn">Medium Risk threshold</div>
+            <div class="sd">"Possibly AI" at or above this score</div>
+          </div>
+          <select id="settingMedThresh" class="s-select">
+            <option value="0.3">30%</option>
+            <option value="0.4" selected>40%</option>
+            <option value="0.5">50%</option>
+            <option value="0.6">60%</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ── Actions ── -->
+      <div class="sg">
+        <div class="sg-title">Actions</div>
+
+        <div class="action-grid">
+          <button class="action-btn action-btn--blue" id="btnExportJSON">
+            <span class="action-icon">⬇</span>
+            <span class="action-label">Export JSON</span>
+            <span class="action-desc">Download all data</span>
+          </button>
+          <button class="action-btn action-btn--blue" id="btnExportCSV">
+            <span class="action-icon">📊</span>
+            <span class="action-label">Export CSV</span>
+            <span class="action-desc">Open in Excel</span>
+          </button>
+          <button class="action-btn action-btn--amber" id="btnResetSettings">
+            <span class="action-icon">↺</span>
+            <span class="action-label">Reset Settings</span>
+            <span class="action-desc">Restore defaults</span>
+          </button>
+          <button class="action-btn action-btn--red" id="btnClearData">
+            <span class="action-icon">🗑</span>
+            <span class="action-label">Clear All Data</span>
+            <span class="action-desc">Cannot be undone</span>
+          </button>
+        </div>
+
+        <div id="actionMsg" class="action-msg" style="display:none"></div>
+      </div>
+
+      <div class="settings-version">Pause &amp; Verify v5.0.0 · detection runs on your device</div>
+    </div>
+  </div>
+
+
+
+</div><!-- /app -->
+<script src="popup.js"></script>
+</body>
+</html>

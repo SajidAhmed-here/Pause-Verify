@@ -1,0 +1,342 @@
+/* Dark theme (default) */
+#pav-overlay .pav-modal,
+#pav-overlay [data-theme="dark"] .pav-modal,
+#pav-overlay:not([data-theme="light"]) .pav-modal {
+  --pav-bg:        #1a1f2e;
+  --pav-bg-raised: #161b27;
+  --pav-bg-input:  #0f1117;
+  --pav-border:    #2d3748;
+  --pav-text:      #e2e8f0;
+  --pav-muted:     #9ca3af;
+  --pav-faint:     #4b5563;
+  --pav-chip-bg:   #1f2937;
+  --pav-chip-txt:  #d1d5db;
+  --pav-btn-bg:    #1f2937;
+  --pav-btn-txt:   #9ca3af;
+  --pav-bar-bg:    #1f2937;
+  --pav-spinner-t: #374151;
+}
+
+/* Light theme */
+#pav-overlay[data-theme="light"] .pav-modal {
+  --pav-bg:        #ffffff;
+  --pav-bg-raised: #f8fafc;
+  --pav-bg-input:  #f1f5f9;
+  --pav-border:    #e2e8f0;
+  --pav-text:      #0f172a;
+  --pav-muted:     #475569;
+  --pav-faint:     #94a3b8;
+  --pav-chip-bg:   #f1f5f9;
+  --pav-chip-txt:  #334155;
+  --pav-btn-bg:    #f1f5f9;
+  --pav-btn-txt:   #475569;
+  --pav-bar-bg:    #e2e8f0;
+  --pav-spinner-t: #cbd5e1;
+}
+
+/* ── Share analysis overlay ───────────────────────────────────────────────── */
+#pav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  animation: pav-fade .15s ease;
+}
+@keyframes pav-fade { from{opacity:0} to{opacity:1} }
+
+.pav-modal {
+  background: var(--pav-bg);
+  border: 1px solid #2d3748;
+  border-radius: 16px;
+  width: 340px;
+  max-width: 92vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  animation: pav-slide .2s ease;
+  overflow: hidden;
+}
+@keyframes pav-slide { from{transform:translateY(-12px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+.pav-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px 12px;
+  background: linear-gradient(135deg,#1e3a8a,#1d4ed8);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+.pav-modal__header img { border-radius:6px; }
+.pav-modal__header span { flex:1; }
+.pav-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.7);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.pav-close:hover { background: rgba(255,255,255,.15); color:#fff; }
+
+.pav-modal__body {
+  padding: 16px;
+  min-height: 130px;
+}
+
+/* Loading */
+.pav-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0;
+  color: var(--pav-muted);
+  font-size: 13px;
+}
+.pav-spinner {
+  width: 28px; height: 28px;
+  border: var(--pav-spinner-t);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: pav-spin .7s linear infinite;
+}
+@keyframes pav-spin { to{transform:rotate(360deg)} }
+
+/* Score ring */
+.pav-score-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90px; height: 90px;
+  border: 4px solid;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+}
+.pav-score-num  { font-size: 22px; font-weight: 800; line-height: 1; }
+.pav-score-lbl  { font-size: 10px; font-weight: 600; margin-top: 2px; }
+
+.pav-author { font-size: 12px; color: var(--pav-muted); margin-bottom: 6px; text-align:center; }
+.pav-author strong { color: var(--pav-text); }
+
+.pav-text {
+  font-size: 11px;
+  color: var(--pav-faint);
+  background: var(--pav-bg-input);
+  border-radius: 6px;
+  padding: 7px 9px;
+  margin-bottom: 8px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.pav-flags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.pav-flag {
+  font-size: 10px;
+  padding: 2px 7px;
+  background: var(--pav-chip-bg);
+  border-radius: 4px;
+  color: var(--pav-chip-txt);
+}
+
+.pav-bar-row {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11px; color: var(--pav-muted); margin-bottom: 4px;
+}
+.pav-bar-row span:first-child { width: 34px; text-align:right; }
+.pav-bar-row span:last-child  { width: 30px; }
+.pav-bar {
+  flex: 1; height: 6px;
+  background: var(--pav-bar-bg); border-radius: 3px; overflow: hidden;
+}
+.pav-bar div { height: 100%; border-radius: 3px; transition: width .4s; }
+
+.pav-method { font-size: 10px; color: var(--pav-faint); text-align:right; margin-top: 6px; }
+
+/* Footer */
+.pav-modal__footer {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: var(--pav-border);
+  background: var(--pav-bg-raised);
+}
+.pav-btn {
+  flex: 1;
+  padding: 9px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.pav-btn:hover { opacity: .88; }
+.pav-btn--cancel { background: var(--pav-btn-bg); color: var(--pav-btn-txt); }
+.pav-btn--share  { background: #1d4ed8; color: #fff; }
+
+/* ── Post risk badges ────────────────────────────────────────────────────── */
+.pav-badge {
+  position: absolute;
+  top: 8px; right: 8px;
+  z-index: 9999;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  pointer-events: none;
+  animation: pav-fade .3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.pav-badge--high_risk   { background: rgba(220,38,38,.92);  color:#fff; }
+.pav-badge--medium_risk { background: rgba(217,119,6,.92);  color:#fff; }
+
+.pav-no-frame {
+  font-size: 11px;
+  color: #f59e0b;
+  background: #451a03;
+  border-radius: 6px;
+  padding: 5px 9px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* ── Scroll time limit overlay ───────────────────────────────────────────── */
+#pav-scroll-limit-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  animation: pav-fade .25s ease;
+  backdrop-filter: blur(4px);
+}
+
+.pav-sl-modal {
+  background: #1a1f2e;
+  border: 1px solid #2d3748;
+  border-radius: 20px;
+  width: 360px;
+  max-width: 92vw;
+  padding: 32px 28px 24px;
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(0,0,0,.7);
+  animation: pav-slide .25s ease;
+}
+
+.pav-sl-icon {
+  font-size: 52px;
+  margin-bottom: 14px;
+  animation: pav-sl-pulse 1.8s ease-in-out infinite;
+}
+@keyframes pav-sl-pulse {
+  0%,100% { transform: scale(1);   }
+  50%      { transform: scale(1.1); }
+}
+
+.pav-sl-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #f1f5f9;
+  margin-bottom: 10px;
+  letter-spacing: -0.3px;
+}
+
+.pav-sl-body {
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.pav-sl-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.pav-sl-btn {
+  flex: 1;
+  padding: 11px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .15s, transform .1s;
+}
+.pav-sl-btn:hover   { opacity: .9; transform: translateY(-1px); }
+.pav-sl-btn:active  { transform: translateY(0); }
+
+.pav-sl-btn--extend {
+  background: #1f2937;
+  color: #fbbf24;
+  border: 1px solid #374151;
+}
+.pav-sl-btn--done {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #fff;
+}
+
+.pav-sl-note {
+  font-size: 11px;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HCI Feature 2 — Grayscale page mode
+   Applies a CSS grayscale filter to the whole Facebook page when toggled on
+   from the extension settings. The filter is on <body> so every descendant
+   (feed, images, videos, overlays) is desaturated together.
+   ══════════════════════════════════════════════════════════════════════════ */
+html.pav-grayscale {
+  filter: grayscale(1) !important;
+  -webkit-filter: grayscale(1) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HCI Feature 3 — Disable Story autoplay
+   When the user is viewing a Facebook Story AND the "Disable Story Autoplay"
+   setting is on, we pause every CSS animation/transition on the story-viewer
+   progress bars so image-stories won't auto-advance. (For video stories we
+   set video.loop = true in content.js, which blocks the 'ended' event FB
+   uses to auto-advance.)
+   ══════════════════════════════════════════════════════════════════════════ */
+html.pav-no-story-autoplay [role="progressbar"],
+html.pav-no-story-autoplay [role="progressbar"] *,
+html.pav-no-story-autoplay [aria-valuenow][aria-valuemax],
+html.pav-no-story-autoplay [aria-valuenow][aria-valuemax] * {
+  animation-play-state: paused !important;
+  -webkit-animation-play-state: paused !important;
+  transition: none !important;
+}
+
+/* v5.0 additions */
+.pav-sub { font-size: 11px; color: var(--pav-faint, #6b7280); }
+.pav-disclaimer {
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: var(--pav-muted);
+  border-top: 1px solid var(--pav-border);
+  margin-top: 10px;
+  padding-top: 8px;
+}
+#pav-overlay[data-theme="light"] .pav-no-frame { background: #fef3c7; color: #92400e; }
+.pav-badge { pointer-events: none; }
+/* Guard against page-wide img/button styles leaking into the overlay */
+#pav-overlay .pav-modal__header img { width: 22px !important; height: 22px !important; flex: 0 0 22px; max-width: none; }
+#pav-overlay .pav-modal__header span { white-space: nowrap; }
+#pav-overlay .pav-score-ring { width: 84px; height: 84px; margin-bottom: 8px; }
+#pav-overlay .pav-verdict { text-align: center; font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+#pav-overlay .pav-bar-row span:first-child { width: 82px; white-space: nowrap; }
+#pav-overlay .pav-bar-row span:last-child  { width: 34px; text-align: right; }
