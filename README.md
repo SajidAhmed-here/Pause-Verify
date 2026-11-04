@@ -1,4 +1,3 @@
-<img width="1616" height="480" alt="image" src="https://github.com/user-attachments/assets/f69d1269-5bc5-445e-8006-2eaaaa8084a0" /># Pause & Verify
 
 **Pause & Verify** is a privacy-first Chrome extension designed to help you navigate Facebook more mindfully. By adding an automated verification check right when you hit the "Share" button, it empowers you to spot potentially AI-generated content and misleading captions before spreading them further.
 
